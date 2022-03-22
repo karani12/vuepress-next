@@ -1,6 +1,7 @@
 import type { DocSearchProps } from '@docsearch/react'
 import { useSiteData } from '@vuepress/client'
 import { resolveRoutePathFromUrl } from '@vuepress/shared'
+import debounce from 'lodash.debounce'
 import { createElement } from 'preact'
 import { useRouter } from 'vue-router'
 
@@ -52,6 +53,14 @@ export const useDocsearchShim = (): Partial<DocSearchProps> => {
       navigate: ({ itemUrl }) => {
         router.push(itemUrl)
       },
+    },
+
+    // add search debounce
+    transformSearchClient: (searchClient) => {
+      return {
+        ...searchClient,
+        search: debounce(searchClient.search, 5000),
+      }
     },
   } as Partial<DocSearchProps>
 }
