@@ -1,7 +1,16 @@
+<script lang="ts" setup>
+import { RouterLink } from 'vue-router'
+defineProps({
+  items: {
+    type: Array,
+    default: () => [],
+  },
+})
+</script>
 <template>
   <div class="article-wrapper">
     <div v-if="!items.length">Nothing in here.</div>
-    <article class="article" v-for="{ info, path } in items">
+    <article v-for="{ info, path } in items" :key="info" class="article">
       <header class="title">
         <RouterLink :to="path">
           {{ info.title }}
@@ -14,25 +23,16 @@
           >Date: {{ new Date(info.date).toLocaleDateString() }}</span
         >
         <span v-if="info.category" class="category"
-          >Category: {{ info.category.join(",") }}</span
+          >Category: {{ info.category.join(',') }}</span
         >
-        <span v-if="info.tag" class="tag">Tag: {{ info.tag.join(",") }}</span>
+        <span v-if="info.tag" class="tag">Tag: {{ info.tag.join(',') }}</span>
       </div>
     </article>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { RouterLink } from "vue-router";
-defineProps({
-  items: {
-    type: Array,
-    default: () => [],
-  },
-});
-</script>
 <style lang="scss">
-@use "@vuepress/theme-default/lib/client/styles/mixins";
+@use '@vuepress/theme-default/lib/client/styles/mixins';
 .article-wrapper {
   @include mixins.content_wrapper;
   text-align: center;
@@ -54,7 +54,7 @@ defineProps({
     font-size: 1.28rem;
     line-height: 2rem;
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
