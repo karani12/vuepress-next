@@ -7,6 +7,7 @@ const isProd = process.env.NODE_ENV === 'production'
 
 export default defineUserConfig<DefaultThemeOptions>({
   base: '/',
+  theme: path.resolve(__dirname, './theme'),
 
   head: [
     [
